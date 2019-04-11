@@ -1,7 +1,37 @@
+// requires dotenv, .env hides keys
 require("dotenv").config()
 
+// requires the keys.js file where the keys are referenced
 var keys = require("./keys.js")
 
+// requires spotify npm
+var Spotify = require('node-spotify-api');
+
+// gets the spotify keys so we can make calls to spotify
+var spotifyKeys = new Spotify(keys.spotify)
+
+// switch statement for what command we're giving liri
+var askingLiri = function (caseData, functionData) {
+    switch (caseData) {
+        case "spotify-this-song":
+            getMeSpotify(functionData);
+            break;
+
+            // case :
+            // ();
+            // break;
+
+        default:
+            console.log("Liri does not know that.")
+    }
+}
+
+// arguments from the user will be run through the switch statment askingLiri
+var runThis = function (argOne, argTwo) {
+    askingLiri(argOne, argTwo);
+}
+// pass the switch statement the arguments from the user 
+runThis(process.argv[2], process.argv[3]);
 
 
 // 9. Make it so liri.js can take in one of the following commands:
@@ -10,7 +40,7 @@ var keys = require("./keys.js")
 
 
 
-var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+// var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
 
 // * Name of the venue
@@ -28,19 +58,40 @@ var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_i
 
 //    * `spotify-this-song`
 
+function getMeSpotify(songName) {
+
+    spotifyKeys.search({
+        type: 'track',
+        query: songName
+    }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        var songs = data.tracks.items;
+        for (var i = 0; i < songs.length; i++) {
+            // * Artist(s)
+            console.log("Artist(s): " + songs[i].album.artists.map(getArtistNames));
+            // * The song's name
+            console.log("Song: " + songs[i].name);
+            // * A preview link of the song from Spotify
+            console.log("Preview: " + songs[i].preview_url)
+            // * The album that the song is from
+            console.log("Album: " + songs[i].album.name);
+            console.log("==========================")
+        }
+    });
+    // * If no song is provided then your program will default to "The Sign" by Ace of Base.
+
+}
+
+var getArtistNames = function (artists) {
+    return artists.name;
+}
 
 
-var spotify = new Spotify(keys.spotify)
 
-// * Artist(s)
 
-// * The song's name
 
-// * A preview link of the song from Spotify
-
-// * The album that the song is from
-
-// * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
 
 
@@ -92,6 +143,3 @@ var spotify = new Spotify(keys.spotify)
 
 
 // * Edit the text in random.txt to test out the feature for movie-this and concert-this.
-
-
-
