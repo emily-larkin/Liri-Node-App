@@ -30,11 +30,10 @@ var askingLiri = function (caseData, functionData) {
 var runThis = function (argOne, argTwo) {
     askingLiri(argOne, argTwo);
 }
+
 // pass the switch statement the arguments from the user 
 runThis(process.argv[2], process.argv[3]);
 
-
-// 9. Make it so liri.js can take in one of the following commands:
 
 //    * `concert-this`
 
@@ -48,12 +47,6 @@ runThis(process.argv[2], process.argv[3]);
 // * Venue location
 
 // * Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-
-
-
-
-
 
 
 //    * `spotify-this-song`
@@ -81,23 +74,11 @@ function getMeSpotify(songName) {
         }
     });
     // * If no song is provided then your program will default to "The Sign" by Ace of Base.
-
 }
 
 var getArtistNames = function (artists) {
     return artists.name;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    * `movie-this`
@@ -143,3 +124,8 @@ var getArtistNames = function (artists) {
 
 
 // * Edit the text in random.txt to test out the feature for movie-this and concert-this.
+
+
+
+
+
