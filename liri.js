@@ -110,7 +110,6 @@ var getArtistNames = function (artists) {
 
 
 
-
 //    * `do-what-it-says`
 
 
@@ -124,8 +123,5 @@ var getArtistNames = function (artists) {
 
 
 // * Edit the text in random.txt to test out the feature for movie-this and concert-this.
-
-
-
 
 
