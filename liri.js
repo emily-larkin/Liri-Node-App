@@ -5,7 +5,10 @@ require("dotenv").config()
 var keys = require("./keys.js")
 
 // requires spotify npm
-var Spotify = require('node-spotify-api');
+var Spotify = require("node-spotify-api");
+
+// requires request
+var axios = require("axios")
 
 // gets the spotify keys so we can make calls to spotify
 var spotifyKeys = new Spotify(keys.spotify)
@@ -20,6 +23,10 @@ var askingLiri = function (caseData, functionData) {
             // case :
             // ();
             // break;
+
+        case "movie-this":
+            getMovie(functionData);
+            break
 
         default:
             console.log("Liri does not know that.")
@@ -76,38 +83,43 @@ function getMeSpotify(songName) {
     // * If no song is provided then your program will default to "The Sign" by Ace of Base.
 }
 
-var getArtistNames = function (artists) {
+function getArtistNames(artists) {
     return artists.name;
 }
 
 
 //    * `movie-this`
 
-// 3. `node liri.js movie-this '<movie name here>'`
-
-//    * This will output the following information to your terminal/bash window:
-
-//      ```
-//        * Title of the movie.
-//        * Year the movie came out.
-//        * IMDB Rating of the movie.
-//        * Rotten Tomatoes Rating of the movie.
-//        * Country where the movie was produced.
-//        * Language of the movie.
-//        * Plot of the movie.
-//        * Actors in the movie.
-//      ```
-
 //    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 //      * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
 
-//      * It's on Netflix!
+function getMovie(movieName) {
+    var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    axios.get(queryURL)
+        .then(function (response) {
+            console.log("===========================")
+            //        * Title of the movie.
+            console.log("Title: " + response.data.Title)
+            //        * Year the movie came out.
+            console.log("Release Year: " + response.data.Year)
+            //        * IMDB Rating of the movie.
+            console.log("IMDB Rating: " + response.data.imdbRating)
+            //        * Rotten Tomatoes Rating of the movie.
+            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value)
+            //        * Country where the movie was produced.
+            console.log("Country Produced: " + response.data.Country)
+            //        * Language of the movie.
+            console.log("Language: " + response.data.Language)
+            //        * Plot of the movie.
+            console.log("Plot: " + response.data.Plot)
+            //        * Actors in the movie.
+            console.log("Actors: " + response.data.Actors)
+            console.log("===========================")
+        });
 
-//    * You'll use the `axios` package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use `trilogy`.
 
-
-
+}
 
 
 //    * `do-what-it-says`
@@ -123,5 +135,3 @@ var getArtistNames = function (artists) {
 
 
 // * Edit the text in random.txt to test out the feature for movie-this and concert-this.
-
-
