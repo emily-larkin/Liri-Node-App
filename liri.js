@@ -13,6 +13,7 @@ var axios = require("axios")
 // gets the spotify keys so we can make calls to spotify
 var spotifyKeys = new Spotify(keys.spotify)
 
+
 // switch statement for what command we're giving liri
 var askingLiri = function (caseData, functionData) {
     switch (caseData) {
@@ -20,13 +21,13 @@ var askingLiri = function (caseData, functionData) {
             getMeSpotify(functionData);
             break;
 
-            // case :
-            // ();
-            // break;
-
         case "movie-this":
             getMovie(functionData);
-            break
+            break;
+
+        case "concert-this":
+            getConcert(functionData);
+            break;
 
         default:
             console.log("Liri does not know that.")
@@ -44,16 +45,27 @@ runThis(process.argv[2], process.argv[3]);
 
 //    * `concert-this`
 
+function getConcert(artist) {
 
+    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
-// var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    axios.get(queryURL)
+    .then(function(response) {
+            response.data.forEach(function(showInfo) {
+            // * Name of the venue
+            console.log("Venue Name: " + showInfo.venue.name);
+            // * Venue location
+            console.log("Venue Location: "+ showInfo.venue.city);
+            // * Date of the Event (use moment to format this as "MM/DD/YYYY")
+            console.log(" " + showInfo.datetime)
+            console.log("========================")
+            });
+        }
+    ).catch(function (error) {
+    console.log(error);
+  });
 
-
-// * Name of the venue
-
-// * Venue location
-
-// * Date of the Event (use moment to format this as "MM/DD/YYYY")
+}
 
 
 //    * `spotify-this-song`
@@ -69,6 +81,7 @@ function getMeSpotify(songName) {
         }
         var songs = data.tracks.items;
         for (var i = 0; i < songs.length; i++) {
+            console.log("==========================")
             // * Artist(s)
             console.log("Artist(s): " + songs[i].album.artists.map(getArtistNames));
             // * The song's name
@@ -82,17 +95,12 @@ function getMeSpotify(songName) {
     });
     // * If no song is provided then your program will default to "The Sign" by Ace of Base.
 }
-
 function getArtistNames(artists) {
     return artists.name;
 }
 
 
 //    * `movie-this`
-
-//    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-//      * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
 
 function getMovie(movieName) {
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
@@ -117,7 +125,9 @@ function getMovie(movieName) {
             console.log("Actors: " + response.data.Actors)
             console.log("===========================")
         });
+    //    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
+    //      * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
 
 }
 
