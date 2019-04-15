@@ -81,7 +81,6 @@ function getMeSpotify(songName) {
         }
         var songs = data.tracks.items;
         for (var i = 0; i < songs.length; i++) {
-            console.log("==========================")
             // * Artist(s)
             console.log("Artist(s): " + songs[i].album.artists.map(getArtistNames));
             // * The song's name
@@ -106,7 +105,6 @@ function getMovie(movieName) {
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     axios.get(queryURL)
         .then(function (response) {
-            console.log("===========================")
             //        * Title of the movie.
             console.log("Title: " + response.data.Title)
             //        * Year the movie came out.
