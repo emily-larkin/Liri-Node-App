@@ -34,6 +34,7 @@ var askingLiri = function (caseData, functionData) {
     }
 }
 
+
 // arguments from the user will be run through the switch statment askingLiri
 var runThis = function (argOne, argTwo) {
     askingLiri(argOne, argTwo);
@@ -93,6 +94,9 @@ function getMeSpotify(songName) {
         }
     });
     // * If no song is provided then your program will default to "The Sign" by Ace of Base.
+    if (!"spotify-this-song") {
+    "spotify-this-song" = "The Sign";
+    }
 }
 function getArtistNames(artists) {
     return artists.name;
@@ -124,8 +128,9 @@ function getMovie(movieName) {
             console.log("===========================")
         });
     //    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-    //      * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
+    if (!"movie-this") {
+    "movie-this" = "Mr Nobody";
+    }
 
 }
 
